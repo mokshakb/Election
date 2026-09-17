@@ -1,0 +1,210 @@
+/* ==========================================================================
+   Accessibility & Inclusivity Stylesheet
+   Supports High Contrast, Font Resizing, Reduced Motion, & Screen Readers
+   ========================================================================== */
+
+/* Screen Reader Only Utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Clear Focus Rings for Keyboard Navigation */
+:focus-visible {
+  outline: 3px solid #f57c00 !important;
+  outline-offset: 3px !important;
+}
+
+/* ==========================================================================
+   Font Scaling Controls
+   ========================================================================== */
+body.font-large {
+  font-size: 1.15rem;
+}
+
+body.font-large .hero-title {
+  font-size: 2.8rem;
+}
+
+body.font-large .section-title {
+  font-size: 2rem;
+}
+
+body.font-large .card-title {
+  font-size: 1.35rem;
+}
+
+body.font-xlarge {
+  font-size: 1.3rem;
+}
+
+body.font-xlarge .hero-title {
+  font-size: 3.1rem;
+}
+
+body.font-xlarge .section-title {
+  font-size: 2.3rem;
+}
+
+body.font-xlarge .card-title {
+  font-size: 1.5rem;
+}
+
+body.font-xlarge .btn-wizard-start,
+body.font-xlarge .btn-hero-primary,
+body.font-xlarge .dock-btn {
+  font-size: 1.15rem;
+  padding: 14px 26px;
+}
+
+/* ==========================================================================
+   High Contrast Mode: High Contrast Dark
+   ========================================================================== */
+body.theme-high-contrast-dark {
+  --bg-main: #000000;
+  --bg-card: #0a0a0a;
+  --bg-card-subtle: #171717;
+  --text-main: #ffffff;
+  --text-muted: #e2e8f0;
+  --border-color: #facc15;
+  --primary: #38bdf8;
+  --primary-dark: #0284c7;
+  --primary-light: #082f49;
+  --accent-saffron: #fbbf24;
+  --accent-green: #4ade80;
+  --shadow-sm: none;
+  --shadow-md: 0 0 0 1px #facc15;
+  --shadow-lg: 0 0 0 2px #facc15;
+}
+
+body.theme-high-contrast-dark .site-header {
+  background: #000000;
+  border-bottom: 2px solid #facc15;
+}
+
+body.theme-high-contrast-dark .top-bar {
+  background: #0a0a0a;
+  color: #ffffff;
+  border-bottom: 1px solid #facc15;
+}
+
+body.theme-high-contrast-dark .tool-btn {
+  background: #171717;
+  color: #ffffff;
+  border-color: #facc15;
+}
+
+body.theme-high-contrast-dark .hero-card {
+  background: #0a0a0a;
+  border: 3px solid #facc15;
+}
+
+body.theme-high-contrast-dark .hero-card::before {
+  display: none;
+}
+
+body.theme-high-contrast-dark .section-wrapper {
+  background: #0a0a0a;
+  border: 2px solid #facc15;
+}
+
+body.theme-high-contrast-dark .info-card,
+body.theme-high-contrast-dark .station-card,
+body.theme-high-contrast-dark .timeline-card,
+body.theme-high-contrast-dark .check-item,
+body.theme-high-contrast-dark .quiz-question,
+body.theme-high-contrast-dark .faq-item {
+  background: #121212;
+  border: 2px solid #facc15;
+  color: #ffffff;
+}
+
+body.theme-high-contrast-dark .card-icon-header {
+  background: #262626;
+  border: 1px solid #facc15;
+}
+
+body.theme-high-contrast-dark .site-footer {
+  background: #000000;
+  border-top: 2px solid #facc15;
+}
+
+body.theme-high-contrast-dark .evm-ballot-machine {
+  background: #121212;
+  border-color: #facc15;
+}
+
+body.theme-high-contrast-dark .vvpat-cabinet {
+  background: #121212;
+  border-color: #facc15;
+}
+
+/* ==========================================================================
+   High Contrast Mode: Yellow / Black (Special Accessibility standard)
+   ========================================================================== */
+body.theme-high-contrast-yellow {
+  --bg-main: #ffff00;
+  --bg-card: #000000;
+  --bg-card-subtle: #111111;
+  --text-main: #ffff00;
+  --text-muted: #ffffff;
+  --border-color: #ffff00;
+  --primary: #ffff00;
+  --primary-dark: #ffff00;
+  --primary-light: #222222;
+  --accent-saffron: #ffff00;
+  --accent-green: #00ff00;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+}
+
+body.theme-high-contrast-yellow {
+  background: #000000;
+  color: #ffff00;
+}
+
+body.theme-high-contrast-yellow .site-header,
+body.theme-high-contrast-yellow .top-bar,
+body.theme-high-contrast-yellow .journey-bar-wrapper {
+  background: #000000;
+  border-color: #ffff00;
+}
+
+body.theme-high-contrast-yellow .section-wrapper,
+body.theme-high-contrast-yellow .hero-card,
+body.theme-high-contrast-yellow .info-card,
+body.theme-high-contrast-yellow .station-card,
+body.theme-high-contrast-yellow .timeline-card,
+body.theme-high-contrast-yellow .faq-item {
+  background: #000000;
+  border: 2px solid #ffff00;
+  color: #ffff00;
+}
+
+body.theme-high-contrast-yellow .tool-btn,
+body.theme-high-contrast-yellow .btn-listen,
+body.theme-high-contrast-yellow .dock-btn {
+  background: #000000;
+  color: #ffff00;
+  border: 2px solid #ffff00;
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,387 @@
+/* ==========================================================================
+   EVM (Electronic Voting Machine) & VVPAT Simulation Styles
+   Safe, Fictional, Practice Environment
+   ========================================================================== */
+
+.evm-container {
+  background: #f1f5f9;
+  border-radius: var(--radius-lg);
+  border: 2px solid #cbd5e1;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.evm-disclaimer-banner {
+  background: #fee2e2;
+  border: 1.5px solid #ef4444;
+  color: #991b1b;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.evm-setup-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .evm-setup-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Ballot Unit (BU)
+   ========================================================================== */
+.evm-ballot-machine {
+  background: #e2e8f0;
+  border-radius: 16px;
+  border: 4px solid #94a3b8;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+  padding: 18px;
+  position: relative;
+}
+
+.bu-header-strip {
+  background: #0f172a;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.bu-ready-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+}
+
+.led-status-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.led-status-dot.busy {
+  background: #ef4444;
+  box-shadow: 0 0 10px #ef4444;
+}
+
+/* Candidate Ballot Rows */
+.ballot-rows-table {
+  background: white;
+  border-radius: 10px;
+  border: 2px solid #cbd5e1;
+  overflow: hidden;
+}
+
+.ballot-row {
+  display: grid;
+  grid-template-columns: 44px 1.5fr 60px 40px 72px;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e2e8f0;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.ballot-row:last-child {
+  border-bottom: none;
+}
+
+.ballot-row:hover {
+  background: #f8fafc;
+}
+
+.ballot-sl-no {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #334155;
+  text-align: center;
+}
+
+.candidate-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.candidate-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.candidate-party {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.candidate-symbol-box {
+  width: 44px;
+  height: 44px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+}
+
+.ballot-led-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ballot-led {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #475569;
+  border: 1.5px solid #1e293b;
+  transition: all 0.2s ease;
+}
+
+.ballot-led.active {
+  background: #ef4444;
+  box-shadow: 0 0 14px 4px #ef4444;
+  border-color: #fca5a5;
+}
+
+.ballot-button-col {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-vote-blue {
+  width: 60px;
+  height: 38px;
+  background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  border: 2px solid #1e40af;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #1e3a8a, 0 5px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  transition: all 0.1s ease;
+  user-select: none;
+}
+
+.btn-vote-blue:hover:not(:disabled) {
+  background: #3b82f6;
+  transform: translateY(1px);
+  box-shadow: 0 3px 0 #1e3a8a;
+}
+
+.btn-vote-blue:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #1e3a8a;
+}
+
+.btn-vote-blue:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(80%);
+}
+
+/* ==========================================================================
+   VVPAT Unit (Voter Verifiable Paper Audit Trail)
+   ========================================================================== */
+.vvpat-cabinet {
+  background: #334155;
+  border-radius: 16px;
+  border: 4px solid #1e293b;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+  padding: 18px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.vvpat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: #1e293b;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.vvpat-window-frame {
+  background: #0f172a;
+  border: 3px solid #64748b;
+  border-radius: 10px;
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.vvpat-window-frame.illuminated {
+  background: #1e293b;
+  box-shadow: inset 0 0 30px rgba(254, 240, 138, 0.35);
+}
+
+.vvpat-placeholder-glass {
+  color: #64748b;
+  font-size: 0.85rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  padding: 0 16px;
+  font-weight: 600;
+}
+
+/* The physical paper slip */
+.vvpat-slip {
+  width: 170px;
+  background: #ffffff;
+  color: #000000;
+  border: 1px dashed #64748b;
+  border-radius: 4px;
+  padding: 12px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 10;
+  position: relative;
+  transform: translateY(-100%);
+  animation: printSlip 0.8s ease forwards;
+}
+
+@keyframes printSlip {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.vvpat-slip.dropping {
+  animation: dropSlip 0.8s ease forwards;
+}
+
+@keyframes dropSlip {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(180px);
+    opacity: 0;
+  }
+}
+
+.slip-serial {
+  font-weight: 900;
+  font-size: 1.3rem;
+  margin-bottom: 2px;
+}
+
+.slip-symbol {
+  font-size: 2.2rem;
+  margin: 6px 0;
+}
+
+.slip-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 4px;
+  width: 100%;
+}
+
+.vvpat-timer-display {
+  margin-top: 14px;
+  background: #1e293b;
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-align: center;
+  font-family: monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #38bdf8;
+  border: 1px solid #334155;
+}
+
+.vvpat-status-msg {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-top: 10px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* Simulation Controls & Reset */
+.evm-action-footer {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-reset-evm {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1.5px solid #cbd5e1;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.btn-reset-evm:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.simulation-stats {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
