@@ -1,942 +1,766 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JanMat - Beginner-Friendly Election Awareness & Voter Guide | ಜನಮತ</title>
-  <meta name="description" content="A simple, non-partisan, beginner-friendly election awareness platform explaining voting in English and Kannada with interactive EVM simulator, voter eligibility checker, and step-by-step guides.">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗳️</text></svg>">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Election Awareness Platform | Know the Process. Understand Your Vote</title>
+  <meta name="description" content="An interactive, beginner-friendly, and accessible election awareness platform for first-time voters in English and Kannada." />
+
+  <!-- Preconnect to Google Fonts for accessible typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Noto+Sans+Kannada:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/accessibility.css" />
+  <link rel="stylesheet" href="css/evm.css" />
 </head>
 <body>
-  <!-- Screen reader skip link -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <!-- Keyboard accessibility skip link -->
+  <a href="#mainContent" class="skip-link">Skip to Main Content</a>
 
-  <!-- Header -->
-  <header class="site-header" role="banner">
-    <div class="container">
-      <div class="header-inner">
-        <a href="#hero" class="brand" aria-label="JanMat Home">
-          <div class="brand-icon" aria-hidden="true">🗳️</div>
-          <div class="brand-text">
-            <span class="brand-name">
-              <span data-i18n="brandTitle">JanMat</span>
-              <span class="brand-flag-pill">India • ಭಾರತ</span>
-            </span>
-            <span class="brand-tagline" data-i18n="brandSubtitle">Election Awareness & Voter Guide</span>
-          </div>
-        </a>
+  <!-- Top Accessibility & Civic Header -->
+  <header class="site-header">
+    <div class="top-bar">
+      <div class="top-badge">
+        <span>🇮🇳</span>
+        <span data-i18n="badgeGovt">Democratic Civic Literacy Initiative</span>
+      </div>
 
-        <!-- Accessibility and Language Controls -->
-        <div class="header-actions">
-          <!-- Text size adjustment controls -->
-          <div class="a11y-controls" role="group" aria-label="Accessibility Text Scaling">
-            <button type="button" class="btn-icon" id="btnFontDec" title="Smaller text" aria-label="Decrease font size">A-</button>
-            <button type="button" class="btn-icon" id="btnFontReset" title="Normal text" aria-label="Reset font size">A</button>
-            <button type="button" class="btn-icon" id="btnFontInc" title="Larger text" aria-label="Increase font size">A+</button>
-            <button type="button" class="btn-icon" id="btnContrast" title="Toggle High Contrast" aria-label="Toggle high contrast">👁️</button>
-            <button type="button" class="btn-icon" id="btnSpeech" title="Read Aloud Voice" aria-label="Read page aloud">🔊</button>
-          </div>
+      <!-- Accessibility Toolbar -->
+      <div class="access-controls" role="toolbar" aria-label="Accessibility Settings">
+        <button type="button" id="btnContrastToggle" class="tool-btn" title="Toggle High-Contrast Modes">
+          🎨 <span data-i18n="toolContrast">Contrast</span>
+        </button>
 
-          <!-- Prominent Language Switcher Button -->
-          <button type="button" class="btn-lang" id="btnLangToggle" aria-label="Switch language">
-            🌐 <strong>ಕನ್ನಡ</strong>
-          </button>
+        <div style="display: flex; gap: 2px;">
+          <button type="button" id="btnFontDecrease" class="tool-btn" title="Smaller Font Size" aria-label="Smaller text">A-</button>
+          <button type="button" id="btnFontNormal" class="tool-btn active" title="Default Font Size" aria-label="Default text size">A</button>
+          <button type="button" id="btnFontIncrease" class="tool-btn" title="Larger Font Size" aria-label="Larger text">A+</button>
         </div>
+
+        <button type="button" id="btnSoundToggle" class="tool-btn" title="Toggle Sound FX">
+          🔊 <span data-i18n="toolSound">Sound FX</span>
+        </button>
       </div>
     </div>
 
-    <!-- Quick Navigation Sub-bar -->
-    <nav class="nav-scroll" role="navigation" aria-label="Quick Section Navigation">
-      <div class="container">
-        <ul class="nav-links">
-          <li><a href="#what-is-election" class="nav-link-item" data-i18n="navWhatIs">What is Election?</a></li>
-          <li><a href="#who-can-vote" class="nav-link-item" data-i18n="navWhoCanVote">Who Can Vote?</a></li>
-          <li><a href="#election-process" class="nav-link-item" data-i18n="navProcess">How It Works</a></li>
-          <li><a href="#before-voting" class="nav-link-item" data-i18n="navBeforeVoting">Before Voting</a></li>
-          <li><a href="#voting-day" class="nav-link-item" data-i18n="navVotingDay">Voting Day</a></li>
-          <li><a href="#evm-simulator" class="nav-link-item" data-i18n="navSimulator">Try EVM</a></li>
-          <li><a href="#election-timeline" class="nav-link-item" data-i18n="navTimeline">Timeline</a></li>
-          <li><a href="#faq" class="nav-link-item" data-i18n="navFaq">FAQs</a></li>
-          <li><a href="#voter-quiz" class="nav-link-item" data-i18n="navQuiz">Quiz</a></li>
-        </ul>
+    <!-- Main Navigation Bar -->
+    <div class="main-nav-container">
+      <a href="#section-1" class="logo-group" aria-label="Election Awareness Platform Home">
+        <div class="logo-icon">🗳️</div>
+        <div>
+          <h1 class="brand-title" data-i18n="appTitle">Election Awareness Platform</h1>
+          <p class="brand-tagline" data-i18n="tagline">Know the Process. Understand Your Vote</p>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <!-- Language Switcher -->
+        <button type="button" id="btnLangToggle" class="lang-toggle" aria-label="Switch Language to Kannada or English">
+          🌐 ಕನ್ನಡ
+        </button>
+
+        <!-- Guided Mode Starter -->
+        <button type="button" id="btnNewVoterTop" class="btn-wizard-start" aria-label="Start guided voter experience">
+          <span data-i18n="btnNewVoter">✨ I'm New to Voting</span>
+        </button>
       </div>
-    </nav>
+    </div>
   </header>
 
-  <main id="main-content">
-    <!-- Hero Section -->
-    <section id="hero" class="hero-section" aria-labelledby="hero-title">
-      <div class="container">
-        <div class="hero-content">
-          <div class="hero-badge" data-i18n="heroBadge">Simple • Accessible • Non-Partisan</div>
-          <h1 id="hero-title" class="hero-title" data-i18n="heroTitle">Democracy Begins With You.</h1>
-          <p class="hero-subtitle" data-i18n="heroSubtitle">
-            Your vote is your voice, your power, and your right. Learn everything about voting in simple words, step by step.
+  <!-- Interactive Journey Stepper Bar -->
+  <nav class="journey-bar-wrapper" aria-label="Election Journey Steps">
+    <div class="journey-bar">
+      <div class="progress-connector" aria-hidden="true">
+        <div class="progress-connector-fill" id="stepperBarFill"></div>
+      </div>
+
+      <button type="button" class="step-indicator active" data-step="1" aria-label="Step 1: What is an Election">
+        <div class="step-icon-circle">1</div>
+        <span class="step-title" data-i18n="step1Title">1. What is Election?</span>
+      </button>
+
+      <button type="button" class="step-indicator" data-step="2" aria-label="Step 2: Who Can Vote">
+        <div class="step-icon-circle">2</div>
+        <span class="step-title" data-i18n="step2Title">2. Who Can Vote?</span>
+      </button>
+
+      <button type="button" class="step-indicator" data-step="3" aria-label="Step 3: Before Voting">
+        <div class="step-icon-circle">3</div>
+        <span class="step-title" data-i18n="step3Title">3. Before Voting</span>
+      </button>
+
+      <button type="button" class="step-indicator" data-step="4" aria-label="Step 4: Voting Day">
+        <div class="step-icon-circle">4</div>
+        <span class="step-title" data-i18n="step4Title">4. Voting Day</span>
+      </button>
+
+      <button type="button" class="step-indicator" data-step="5" aria-label="Step 5: Timeline">
+        <div class="step-icon-circle">5</div>
+        <span class="step-title" data-i18n="step5Title">5. Timeline</span>
+      </button>
+
+      <button type="button" class="step-indicator" data-step="6" aria-label="Step 6: Practice Vote">
+        <div class="step-icon-circle">6</div>
+        <span class="step-title" data-i18n="step6Title">6. Practice Vote</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main id="mainContent">
+
+    <!-- Hero Greeting Card -->
+    <section class="hero-card" aria-labelledby="heroTitle">
+      <div class="hero-content">
+        <div class="hero-pill">
+          <span>🌟</span> <span data-i18n="heroPill">Simple • Visual • Interactive</span>
+        </div>
+        <h2 id="heroTitle" class="hero-title" data-i18n="heroTitle">Voting is Simple. Let's Learn Step-by-Step.</h2>
+        <p class="hero-subtitle" data-i18n="heroSubtitle">
+          Democracy belongs to everyone! Whether you are 18 and voting for the first time or simply want to understand how it works, we make every step crystal clear.
+        </p>
+        <div class="hero-cta-group">
+          <button type="button" id="btnHeroStart" class="btn-hero-primary">
+            <span data-i18n="heroBtnStart">Start My Guided Journey 🚀</span>
+          </button>
+          <button type="button" id="btnHeroPractice" class="btn-hero-secondary">
+            <span data-i18n="heroBtnPractice">Practice on EVM 🗳️</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 1: What is an Election? -->
+    <section id="section-1" class="section-wrapper" aria-labelledby="s1Heading">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-num" data-i18n="s1Num">1</div>
+          <div>
+            <h2 id="s1Heading" class="section-title" data-i18n="s1Title">What is an Election?</h2>
+            <p class="section-sub" data-i18n="s1Sub">Understanding democracy in the simplest words</p>
+          </div>
+        </div>
+        <button type="button" class="btn-listen" data-target-section="section-1" data-speech-key="s1SpeechText" aria-label="Listen to explanation for What is an Election">
+          <span data-i18n="s1Listen">🔊 Listen</span>
+        </button>
+      </div>
+
+      <!-- Animated SVG Demonstration -->
+      <div class="animation-stage">
+        <svg class="democracy-anim-svg" viewBox="0 0 500 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Visual animation of citizens choosing their representative peacefully">
+          <!-- Background glow -->
+          <circle cx="250" cy="100" r="80" fill="#e0f2fe" opacity="0.6" />
+          
+          <!-- Citizens Group -->
+          <g id="voters-group">
+            <!-- Voter 1 -->
+            <circle cx="80" cy="120" r="18" fill="#f57c00" />
+            <path d="M60 170 C60 145 100 145 100 170" fill="#f57c00" />
+            <!-- Voter 2 -->
+            <circle cx="150" cy="110" r="20" fill="#1a4fba" />
+            <path d="M125 170 C125 140 175 140 175 170" fill="#1a4fba" />
+            <!-- Voter 3 -->
+            <circle cx="210" cy="125" r="16" fill="#2e7d32" />
+            <path d="M190 170 C190 150 230 150 230 170" fill="#2e7d32" />
+          </g>
+
+          <!-- Ballot Box with Paper Sliding In -->
+          <g id="ballot-box-group">
+            <rect x="320" y="80" width="130" height="90" rx="8" fill="#1e293b" />
+            <rect x="340" y="70" width="90" height="12" rx="4" fill="#475569" />
+            <rect x="365" y="74" width="40" height="4" rx="2" fill="#0f172a" />
+            <!-- Inward Sliding Ballot Paper -->
+            <rect x="372" y="45" width="26" height="35" rx="3" fill="#ffffff" stroke="#3b82f6" stroke-width="2">
+              <animate attributeName="y" values="35;65;35" dur="3s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.2;1;0.2" dur="3s" repeatCount="indefinite" />
+            </rect>
+            <!-- Checkmark Symbol on Paper -->
+            <path d="M378 58 L383 63 L392 52" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <animate attributeName="transform" type="translate" values="0 -10; 0 20; 0 -10" dur="3s" repeatCount="indefinite" />
+            </path>
+            <!-- Badge on Box -->
+            <circle cx="385" cy="125" r="18" fill="#f57c00" />
+            <text x="385" y="131" font-size="16" text-anchor="middle" fill="white" font-weight="bold">✓</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Core 3 Pillars Cards -->
+      <div class="grid-3">
+        <div class="info-card">
+          <div class="card-icon-header">⚖️</div>
+          <h3 class="card-title" data-i18n="s1Point1Title">One Person, One Vote</h3>
+          <p class="card-desc" data-i18n="s1Point1Desc">Every adult citizen has exactly one vote, and every single vote has equal value. Nobody's vote is more powerful than yours.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="card-icon-header">🔒</div>
+          <h3 class="card-title" data-i18n="s1Point2Title">Secret Ballot</h3>
+          <p class="card-desc" data-i18n="s1Point2Desc">Your vote is 100% confidential. No one—not your boss, family, or police—can ever find out which candidate you chose.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="card-icon-header">🕊️</div>
+          <h3 class="card-title" data-i18n="s1Point3Title">Peaceful Change</h3>
+          <p class="card-desc" data-i18n="s1Point3Desc">Elections allow citizens to renew their leaders or choose new ones every 5 years without conflict.</p>
+        </div>
+      </div>
+
+      <!-- Interactive Analogy Box -->
+      <div class="interactive-analogy-box">
+        <h4 class="analogy-title">
+          <span>💡</span> <span data-i18n="s1AnalogyTitle">Think of it like choosing a team captain!</span>
+        </h4>
+        <p data-i18n="s1AnalogyDesc">Everyone gets together, looks at the options, and casts a secret token. The person with the most trust and votes represents the entire group.</p>
+      </div>
+    </section>
+
+    <!-- STEP 2: Who Can Vote? -->
+    <section id="section-2" class="section-wrapper" aria-labelledby="s2Heading">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-num" data-i18n="s2Num">2</div>
+          <div>
+            <h2 id="s2Heading" class="section-title" data-i18n="s2Title">Who Can Vote?</h2>
+            <p class="section-sub" data-i18n="s2Sub">Eligibility criteria to be an Indian voter</p>
+          </div>
+        </div>
+        <button type="button" class="btn-listen" data-target-section="section-2" data-speech-key="s2SpeechText" aria-label="Listen to Who Can Vote criteria">
+          <span data-i18n="s2Listen">🔊 Listen</span>
+        </button>
+      </div>
+
+      <!-- 4 Eligibility Cards -->
+      <div class="grid-4">
+        <div class="info-card">
+          <div class="card-icon-header">🇮🇳</div>
+          <h3 class="card-title" data-i18n="s2Crit1Title">Indian Citizen</h3>
+          <p class="card-desc" data-i18n="s2Crit1Desc">You must be a legal citizen of India. Both resident and registered overseas citizens are included.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="card-icon-header">🎂</div>
+          <h3 class="card-title" data-i18n="s2Crit2Title">18+ Years Old</h3>
+          <p class="card-desc" data-i18n="s2Crit2Desc">You must turn 18 on or before the qualifying dates (January 1, April 1, July 1, or October 1).</p>
+        </div>
+
+        <div class="info-card">
+          <div class="card-icon-header">📜</div>
+          <h3 class="card-title" data-i18n="s2Crit3Title">Registered in Voter List</h3>
+          <p class="card-desc" data-i18n="s2Crit3Desc">Crucial Rule: Having a Voter ID card is not enough! Your name must be enrolled in the Electoral Roll of your constituency.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="card-icon-header">🧠</div>
+          <h3 class="card-title" data-i18n="s2Crit4Title">Sound Mind</h3>
+          <p class="card-desc" data-i18n="s2Crit4Desc">Must not be disqualified by law due to mental unsoundness or conviction for electoral offences.</p>
+        </div>
+      </div>
+
+      <!-- Interactive Eligibility Mini-Quiz -->
+      <div class="eligibility-checker-box">
+        <div class="checker-header">
+          <div>
+            <h3 style="font-weight: 800; font-size: 1.25rem; color: var(--primary-dark);" data-i18n="quizTitle">Interactive: Check Your Eligibility</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted);" data-i18n="quizSub">Answer 3 quick questions to check your voting readiness:</p>
+          </div>
+          <span style="font-size: 1.8rem;">📋</span>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="quiz-question">
+          <span style="font-weight: 600;" data-i18n="q1Text">1. Are you a Citizen of India?</span>
+          <div class="quiz-btns">
+            <button type="button" class="quiz-btn" data-q="q1" data-val="yes" data-i18n="btnYes">Yes</button>
+            <button type="button" class="quiz-btn" data-q="q1" data-val="no" data-i18n="btnNo">No</button>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question">
+          <span style="font-weight: 600;" data-i18n="q2Text">2. Are you 18 years of age or older?</span>
+          <div class="quiz-btns">
+            <button type="button" class="quiz-btn" data-q="q2" data-val="yes" data-i18n="btnYes">Yes</button>
+            <button type="button" class="quiz-btn" data-q="q2" data-val="no" data-i18n="btnNo">No</button>
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question">
+          <span style="font-weight: 600;" data-i18n="q3Text">3. Is your name listed on the official Voter List?</span>
+          <div class="quiz-btns">
+            <button type="button" class="quiz-btn" data-q="q3" data-val="yes" data-i18n="btnYes">Yes</button>
+            <button type="button" class="quiz-btn" data-q="q3" data-val="no" data-i18n="btnNo">No</button>
+          </div>
+        </div>
+
+        <!-- Result Banner -->
+        <div id="eligibilityResultBanner" class="eligibility-result-banner" role="status"></div>
+      </div>
+    </section>
+
+    <!-- STEP 3: Before Voting -->
+    <section id="section-3" class="section-wrapper" aria-labelledby="s3Heading">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-num" data-i18n="s3Num">3</div>
+          <div>
+            <h2 id="s3Heading" class="section-title" data-i18n="s3Title">Before Voting: How to Prepare</h2>
+            <p class="section-sub" data-i18n="s3Sub">3 crucial checks to complete before polling day</p>
+          </div>
+        </div>
+        <button type="button" class="btn-listen" data-target-section="section-3" data-speech-key="s3SpeechText" aria-label="Listen to Before Voting Preparation">
+          <span data-i18n="s3Listen">🔊 Listen</span>
+        </button>
+      </div>
+
+      <!-- 3 Key Pre-Poll Steps -->
+      <div class="grid-3">
+        <div class="info-card">
+          <div class="card-icon-header">🔍</div>
+          <h3 class="card-title" data-i18n="s3Step1Title">1. Search Your Name</h3>
+          <p class="card-desc" data-i18n="s3Step1Desc">Check on the Voter Helpline App or voters.eci.gov.in. Download your Voter Information Slip containing your serial and part number.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="card-icon-header">📍</div>
+          <h3 class="card-title" data-i18n="s3Step2Title">2. Locate Your Polling Booth</h3>
+          <p class="card-desc" data-i18n="s3Step2Desc">Your polling booth is usually a nearby school or community center. Know its exact location so you don't wander on voting day.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="card-icon-header">🪪</div>
+          <h3 class="card-title" data-i18n="s3Step3Title">3. Carry an Approved Photo ID</h3>
+          <p class="card-desc" data-i18n="s3Step3Desc">Voter ID (EPIC) is ideal, but you can also use Aadhaar, Driving License, PAN Card, Passport, or MNREGA Job Card.</p>
+        </div>
+      </div>
+
+      <!-- Accepted IDs Showcase -->
+      <div style="margin-top: 24px;">
+        <h4 style="font-weight: 700; margin-bottom: 12px; font-size: 1rem; color: var(--primary-dark);">
+          💳 Valid Photo IDs Accepted at Polling Station:
+        </h4>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <div class="photo-id-chip">🪪 Voter ID (EPIC)</div>
+          <div class="photo-id-chip">🆔 Aadhaar Card</div>
+          <div class="photo-id-chip">🚗 Driving License</div>
+          <div class="photo-id-chip">🛂 Passport</div>
+          <div class="photo-id-chip">💳 PAN Card</div>
+          <div class="photo-id-chip">🏦 Bank Passbook with Photo</div>
+        </div>
+      </div>
+
+      <!-- Interactive Pre-Voting Checklist -->
+      <div class="checklist-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3 style="font-weight: 800; font-size: 1.2rem; color: var(--accent-ink);" data-i18n="checklistHeader">
+            Interactive Pre-Voting Checklist
+          </h3>
+          <span style="font-size: 0.85rem; color: #7e22ce; font-weight: 600;" data-i18n="chkSaved">Saved locally</span>
+        </div>
+
+        <div class="check-item" data-chk-id="chk1" tabindex="0" role="checkbox" aria-checked="false">
+          <div class="check-box-visual"></div>
+          <span class="check-title" data-i18n="chk1">I verified my name exists on the current Electoral Roll.</span>
+        </div>
+
+        <div class="check-item" data-chk-id="chk2" tabindex="0" role="checkbox" aria-checked="false">
+          <div class="check-box-visual"></div>
+          <span class="check-title" data-i18n="chk2">I know the address of my assigned Polling Station.</span>
+        </div>
+
+        <div class="check-item" data-chk-id="chk3" tabindex="0" role="checkbox" aria-checked="false">
+          <div class="check-box-visual"></div>
+          <span class="check-title" data-i18n="chk3">I have prepared my original Photo ID (EPIC, Aadhaar, etc.).</span>
+        </div>
+
+        <div class="check-item" data-chk-id="chk4" tabindex="0" role="checkbox" aria-checked="false">
+          <div class="check-box-visual"></div>
+          <span class="check-title" data-i18n="chk4">I know polling hours (usually 7:00 AM to 6:00 PM).</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4: Voting Day Step-by-Step Polling Station Walkthrough -->
+    <section id="section-4" class="section-wrapper" aria-labelledby="s4Heading">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-num" data-i18n="s4Num">4</div>
+          <div>
+            <h2 id="s4Heading" class="section-title" data-i18n="s4Title">Voting Day: Step-by-Step at the Booth</h2>
+            <p class="section-sub" data-i18n="s4Sub">What will happen when you enter the Polling Station</p>
+          </div>
+        </div>
+        <button type="button" class="btn-listen" data-target-section="section-4" data-speech-key="s4SpeechText" aria-label="Listen to Voting Day polling station guide">
+          <span data-i18n="s4Listen">🔊 Listen</span>
+        </button>
+      </div>
+
+      <!-- 5 Station Walkthrough -->
+      <div class="station-journey-track">
+        <!-- Station 1 -->
+        <div class="station-card">
+          <div class="station-number-badge">1</div>
+          <div class="station-body">
+            <span class="station-step-tag">Station 1</span>
+            <h3 class="card-title" data-i18n="st1Title">First Polling Officer</h3>
+            <p class="station-desc" data-i18n="st1Desc">Checks your Photo ID and verifies your name against the official electoral roll. The officer calls out your name loudly.</p>
+          </div>
+        </div>
+
+        <!-- Station 2 -->
+        <div class="station-card">
+          <div class="station-number-badge">2</div>
+          <div class="station-body">
+            <span class="station-step-tag">Station 2</span>
+            <h3 class="card-title" data-i18n="st2Title">Second Polling Officer (Inking & Signature)</h3>
+            <p class="station-desc" data-i18n="st2Desc">Applies indelible purple ink on your left index finger. You sign or provide your thumb impression in Register 17A.</p>
+            <div class="ink-visual-preview">
+              <span>🟣</span> <span>Indelible Purple Ink Mark on Left Index Finger</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Station 3 -->
+        <div class="station-card">
+          <div class="station-number-badge">3</div>
+          <div class="station-body">
+            <span class="station-step-tag">Station 3</span>
+            <h3 class="card-title" data-i18n="st3Title">Third Polling Officer (Voter Slip)</h3>
+            <p class="station-desc" data-i18n="st3Desc">Collects the voter slip, checks the ink mark on your finger, and guides you to the private voting compartment.</p>
+          </div>
+        </div>
+
+        <!-- Station 4 -->
+        <div class="station-card">
+          <div class="station-number-badge">4</div>
+          <div class="station-body">
+            <span class="station-step-tag">Station 4</span>
+            <h3 class="card-title" data-i18n="st4Title">Secret Voting Compartment</h3>
+            <p class="station-desc" data-i18n="st4Desc">You step inside the three-sided shielded cubicle. Complete privacy is guaranteed by law. No cameras or phones are permitted.</p>
+          </div>
+        </div>
+
+        <!-- Station 5 -->
+        <div class="station-card">
+          <div class="station-number-badge">5</div>
+          <div class="station-body">
+            <span class="station-step-tag">Station 5</span>
+            <h3 class="card-title" data-i18n="st5Title">Cast Vote on EVM & Check VVPAT</h3>
+            <p class="station-desc" data-i18n="st5Desc">Press the blue button next to your chosen candidate. A red light turns on, followed by a long BEEP. The VVPAT window shows your printed slip for 7 seconds!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 5: Election Timeline -->
+    <section id="section-5" class="section-wrapper" aria-labelledby="s5Heading">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-num" data-i18n="s5Num">5</div>
+          <div>
+            <h2 id="s5Heading" class="section-title" data-i18n="s5Title">The Election Timeline</h2>
+            <p class="section-sub" data-i18n="s5Sub">Major milestones from announcement to results</p>
+          </div>
+        </div>
+        <button type="button" class="btn-listen" data-target-section="section-5" data-speech-key="s5SpeechText" aria-label="Listen to Election Timeline explanation">
+          <span data-i18n="s5Listen">🔊 Listen</span>
+        </button>
+      </div>
+
+      <div class="timeline-stages">
+        <div class="timeline-card">
+          <div class="timeline-step-index">STAGE 1</div>
+          <h3 class="timeline-card-title" data-i18n="t1Title">1. Announcement</h3>
+          <p class="timeline-card-desc" data-i18n="t1Desc">Election Commission announces dates. The Model Code of Conduct takes effect immediately.</p>
+        </div>
+
+        <div class="timeline-card">
+          <div class="timeline-step-index">STAGE 2</div>
+          <h3 class="timeline-card-title" data-i18n="t2Title">2. Nomination</h3>
+          <p class="timeline-card-desc" data-i18n="t2Desc">Candidates file papers. Officials scrutinize eligibility and candidates can withdraw.</p>
+        </div>
+
+        <div class="timeline-card">
+          <div class="timeline-step-index">STAGE 3</div>
+          <h3 class="timeline-card-title" data-i18n="t3Title">3. Campaigning</h3>
+          <p class="timeline-card-desc" data-i18n="t3Desc">Candidates present manifestos. Loudspeaker campaigning stops 48 hours before voting begins.</p>
+        </div>
+
+        <div class="timeline-card">
+          <div class="timeline-step-index">STAGE 4</div>
+          <h3 class="timeline-card-title" data-i18n="t4Title">4. Polling Day</h3>
+          <p class="timeline-card-desc" data-i18n="t4Desc">Citizens cast votes safely from morning to evening using EVMs and VVPATs.</p>
+        </div>
+
+        <div class="timeline-card">
+          <div class="timeline-step-index">STAGE 5</div>
+          <h3 class="timeline-card-title" data-i18n="t5Title">5. Counting & Results</h3>
+          <p class="timeline-card-desc" data-i18n="t5Desc">Votes are counted under strict transparency. Winning representatives are declared.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 6: Practice Voting Simulator (EVM & VVPAT) -->
+    <section id="section-6" class="section-wrapper" aria-labelledby="s6Heading">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-num" data-i18n="s6Num">6</div>
+          <div>
+            <h2 id="s6Heading" class="section-title" data-i18n="s6Title">Practice Voting Simulator 🗳️</h2>
+            <p class="section-sub" data-i18n="s6Sub">Safe, fictional, interactive simulation of the EVM and VVPAT</p>
+          </div>
+        </div>
+        <button type="button" class="btn-listen" data-target-section="section-6" data-speech-key="s6SpeechText" aria-label="Listen to EVM Practice Voting instructions">
+          <span data-i18n="s6Listen">🔊 Listen</span>
+        </button>
+      </div>
+
+      <!-- Simulation Container -->
+      <div class="evm-container">
+        <!-- Prominent Neutrality Disclaimer Banner -->
+        <div class="evm-disclaimer-banner">
+          <span data-i18n="evmDisclaimer">⚠️ PRACTICE SIMULATION ONLY • 100% FICTIONAL & NEUTRAL • NOT A REAL ELECTION</span>
+        </div>
+
+        <div class="evm-setup-layout">
+          <!-- Left: EVM Ballot Unit (BU) -->
+          <div class="evm-ballot-machine" aria-label="EVM Ballot Unit">
+            <div class="bu-header-strip">
+              <span>BALLOT UNIT (BU)</span>
+              <div class="bu-ready-indicator">
+                <span class="led-status-dot" id="cuStatusLed"></span>
+                <span id="cuStatusText" data-i18n="cuReadyText">STATUS: READY TO VOTE</span>
+              </div>
+            </div>
+
+            <!-- Dynamic Candidate Rows generated via JS -->
+            <div class="ballot-rows-table" id="evmBallotRows">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Right: VVPAT Paper Audit Chamber -->
+          <div class="vvpat-cabinet" aria-label="VVPAT Verification Unit">
+            <div class="vvpat-header">
+              <span data-i18n="vvpatHeaderTitle">VVPAT AUDIT WINDOW</span>
+              <span>7s SLIP VERIFY</span>
+            </div>
+
+            <div class="vvpat-window-frame" id="vvpatWindow">
+              <span class="vvpat-placeholder-glass" id="vvpatGlassPlaceholder" data-i18n="vvpatIdleMsg">
+                Paper slip will appear here for 7 seconds after you press the blue button.
+              </span>
+
+              <!-- Animated Printed Slip -->
+              <div class="vvpat-slip" id="vvpatSlip">
+                <div class="slip-serial" id="slipSerial">1</div>
+                <div class="slip-symbol" id="slipSymbol">📖</div>
+                <div class="slip-name" id="slipName">Candidate Name</div>
+              </div>
+            </div>
+
+            <div class="vvpat-timer-display" id="vvpatTimer" data-i18n="vvpatTimerText">
+              Viewing Slip: 7s
+            </div>
+
+            <p class="vvpat-status-msg" id="vvpatStatus" data-i18n="vvpatIdleMsg">
+              Paper slip will appear here for 7 seconds after you press the blue button.
+            </p>
+          </div>
+        </div>
+
+        <!-- Simulation Action Footer -->
+        <div class="evm-action-footer">
+          <button type="button" id="btnResetEVM" class="btn-reset-evm">
+            <span data-i18n="btnResetLabel">🔄 Try Again / Reset Machine</span>
+          </button>
+          <div class="simulation-stats">
+            <span data-i18n="votesCastLabel">Practice votes cast today:</span> <strong id="votesCountDisplay">0</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: Badges & Personalized Voter Certificate -->
+    <section id="section-7" class="section-wrapper" aria-labelledby="s7Heading">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-num" data-i18n="s7Num">7</div>
+          <div>
+            <h2 id="s7Heading" class="section-title" data-i18n="s7Title">Achievements & First-Time Voter Certificate</h2>
+            <p class="section-sub" data-i18n="s7Sub">Collect civic badges and download your personalized pledge certificate</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 Badges Showcase Grid -->
+      <div class="badges-showcase-grid">
+        <div class="badge-item" id="badge1">
+          <div class="badge-icon">🏛️</div>
+          <div class="badge-name" data-i18n="badge1Name">Democracy Explorer</div>
+          <div class="badge-desc" data-i18n="badge1Desc">Explored 'What is an Election'</div>
+        </div>
+
+        <div class="badge-item" id="badge2">
+          <div class="badge-icon">📋</div>
+          <div class="badge-name" data-i18n="badge2Name">Eligibility Confirmed</div>
+          <div class="badge-desc" data-i18n="badge2Desc">Completed eligibility quiz</div>
+        </div>
+
+        <div class="badge-item" id="badge3">
+          <div class="badge-icon">🎒</div>
+          <div class="badge-name" data-i18n="badge3Name">Prepared Voter</div>
+          <div class="badge-desc" data-i18n="badge3Desc">Checked pre-voting checklist</div>
+        </div>
+
+        <div class="badge-item" id="badge4">
+          <div class="badge-icon">🗳️</div>
+          <div class="badge-name" data-i18n="badge4Name">Booth Master</div>
+          <div class="badge-desc" data-i18n="badge4Desc">Learned all 5 polling steps</div>
+        </div>
+
+        <div class="badge-item" id="badge5">
+          <div class="badge-icon">🏅</div>
+          <div class="badge-name" data-i18n="badge5Name">Certified Voter</div>
+          <div class="badge-desc" data-i18n="badge5Desc">Practiced vote on the EVM simulator</div>
+        </div>
+      </div>
+
+      <!-- Name Input Form Row -->
+      <div class="cert-form-row">
+        <input type="text" id="certVoterNameInput" class="cert-input" placeholder="Enter your full name" data-i18n-placeholder="certPlaceholderName" aria-label="Your full name for voter certificate" />
+        <button type="button" id="btnPrintCert" class="btn-cert-download">
+          <span data-i18n="certBtnDownload">🖨️ Print / Save Certificate</span>
+        </button>
+      </div>
+
+      <!-- Printable Certificate Preview Box -->
+      <div class="certificate-preview-box" id="printableCertArea">
+        <div class="cert-header-seal">🇮🇳</div>
+        <h3 class="cert-main-title" data-i18n="certTitle">CERTIFICATE OF CIVIC READINESS</h3>
+        <p class="cert-subtitle" data-i18n="certSubtitle">This is proudly presented to</p>
+        <div class="cert-recipient-name" id="certDisplayName">Your Name Here</div>
+        <p class="cert-pledge-text" data-i18n="certPledge">
+          “I understand the electoral process and pledge to cast my valuable vote ethically, fearlessly, and responsibly in Indian Democracy.”
+        </p>
+        <div style="font-size: 0.85rem; color: #64748b; font-weight: 600;">
+          Verified by Election Awareness Platform • Election Commission of India Guidelines Compliant
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: FAQ & Myth Busters -->
+    <section id="section-8" class="section-wrapper" aria-labelledby="s8Heading">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-num" data-i18n="s8Num">8</div>
+          <div>
+            <h2 id="s8Heading" class="section-title" data-i18n="s8Title">Common Questions & Myth Busters</h2>
+            <p class="section-sub" data-i18n="s8Sub">Facts you should know before stepping into the booth</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-accordion">
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span data-i18n="faq1Q">Can I vote if I do not have a physical Voter ID card?</span>
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer" data-i18n="faq1A">
+            YES! If your name is on the Electoral Roll, you can vote by showing any of the 12 approved government photo IDs such as Aadhaar Card, Driving License, Passport, PAN Card, or Bank Passbook.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span data-i18n="faq2Q">Is my vote really secret? Can political parties know who I voted for?</span>
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer" data-i18n="faq2A">
+            NO ONE can know who you voted for. The voting compartment is fully enclosed, EVMs do not record voter identity, and ballot secrecy is strictly protected under Section 128 of the Representation of the People Act.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span data-i18n="faq3Q">What is NOTA (None of the Above)?</span>
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer" data-i18n="faq3A">
+            NOTA is the last option on the EVM ballot. It allows a voter to officially record their right not to vote for any of the contesting candidates while still participating in democracy.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span data-i18n="faq4Q">Can someone force or pay me to vote for a specific candidate?</span>
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer" data-i18n="faq4A">
+            Bribery or coercion is a severe criminal offense. Your vote is your sovereign right. Call the 1950 toll-free helpline or report anonymously on the cVIGIL App.
+          </div>
+        </div>
+      </div>
+
+      <!-- Voter Helpline Banner -->
+      <div class="helpline-box">
+        <div>
+          <h4 style="font-weight: 800; font-size: 1.15rem; color: #991b1b;" data-i18n="helplineTitle">
+            National Voter Helpline (Toll-Free)
+          </h4>
+          <p style="font-size: 0.9rem; color: #7f1d1d; margin-top: 4px;" data-i18n="helplineDesc">
+            Available in all Indian languages for voter registration, polling booth queries, and reporting complaints.
           </p>
-
-          <div class="hero-actions">
-            <a href="#what-is-election" class="btn-primary" data-i18n="heroBtnLearn">Start Learning</a>
-            <a href="#evm-simulator" class="btn-secondary" data-i18n="heroBtnSim">Practice Voting (EVM)</a>
-          </div>
-
-          <!-- Quick facts banner -->
-          <div class="hero-stats">
-            <div class="stat-card">
-              <span class="stat-number" data-i18n="heroStat1Number">18+</span>
-              <span class="stat-label" data-i18n="heroStat1Label">Voting Age</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-number" data-i18n="heroStat2Number">1 Person</span>
-              <span class="stat-label" data-i18n="heroStat2Label">1 Vote, Equal Value</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-number" data-i18n="heroStat3Number">100%</span>
-              <span class="stat-label" data-i18n="heroStat3Label">Secret & Safe Ballot</span>
-            </div>
-          </div>
         </div>
+        <div class="helpline-number">📞 1950</div>
       </div>
     </section>
 
-    <!-- Section 1: What is an Election? -->
-    <section id="what-is-election" class="section" aria-labelledby="s1-heading">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="s1-heading" class="section-title" data-i18n="s1Title">What is an Election?</h2>
-          <p class="section-subtitle" data-i18n="s1Subtitle">Understanding democracy in very simple words</p>
-        </div>
-
-        <div class="grid-2">
-          <!-- Card 1 -->
-          <div class="feature-card">
-            <div class="card-icon-wrapper" aria-hidden="true">🤝</div>
-            <h3 class="card-title" data-i18n="s1Card1Title">Choosing Your Representatives</h3>
-            <p class="card-desc" data-i18n="s1Card1Desc">
-              An election is like choosing a captain for your cricket team or a monitor for your class. As citizens, we choose leaders to make decisions about roads, schools, hospitals, and laws for all of us.
-            </p>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="feature-card">
-            <div class="card-icon-wrapper" aria-hidden="true">⚖️</div>
-            <h3 class="card-title" data-i18n="s1Card2Title">Every Single Vote is Equal</h3>
-            <p class="card-desc" data-i18n="s1Card2Desc">
-              Whether someone is rich or poor, young or old, a farmer or a doctor — everyone gets exactly one vote, and every vote has the exact same value.
-            </p>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="feature-card">
-            <div class="card-icon-wrapper" aria-hidden="true">🔒</div>
-            <h3 class="card-title" data-i18n="s1Card3Title">Your Vote is 100% Secret</h3>
-            <p class="card-desc" data-i18n="s1Card3Desc">
-              Inside the voting compartment, nobody can see which button you press. No leader, no family member, and no police officer can ever know who you voted for.
-            </p>
-          </div>
-
-          <!-- Card 4 -->
-          <div class="feature-card">
-            <div class="card-icon-wrapper" aria-hidden="true">📢</div>
-            <h3 class="card-title" data-i18n="s1Card4Title">Your Voice in the Government</h3>
-            <p class="card-desc" data-i18n="s1Card4Desc">
-              When you vote, you hold leaders accountable. Good leaders are encouraged to work hard, and people can choose new leaders if they are not satisfied.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 2: Who Can Vote? -->
-    <section id="who-can-vote" class="section" aria-labelledby="s2-heading">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="s2-heading" class="section-title" data-i18n="s2Title">Who Can Vote in India?</h2>
-          <p class="section-subtitle" data-i18n="s2Subtitle">3 simple rules determine if you can cast your vote</p>
-        </div>
-
-        <!-- 3 Simple Rules -->
-        <div class="grid-3 eligibility-rules">
-          <div class="feature-card">
-            <div class="card-icon-wrapper" aria-hidden="true">🎂</div>
-            <h3 class="card-title" data-i18n="s2Rule1Title">1. Age 18 or Older</h3>
-            <p class="card-desc" data-i18n="s2Rule1Desc">
-              You must be at least 18 years old on the qualifying date (January 1st, April 1st, July 1st, or October 1st).
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <div class="card-icon-wrapper" aria-hidden="true">🇮🇳</div>
-            <h3 class="card-title" data-i18n="s2Rule2Title">2. Indian Citizen</h3>
-            <p class="card-desc" data-i18n="s2Rule2Desc">
-              You must be a citizen of India and ordinarily residing in your constituency.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <div class="card-icon-wrapper" aria-hidden="true">📋</div>
-            <h3 class="card-title" data-i18n="s2Rule3Title">3. Name in the Voter List</h3>
-            <p class="card-desc" data-i18n="s2Rule3Desc">
-              Most important! Your name MUST be listed in the official Electoral Roll (Voter List) of your area.
-            </p>
-          </div>
-        </div>
-
-        <!-- Interactive 30-Second Eligibility Checker Tool -->
-        <div class="checker-box" role="region" aria-label="Eligibility Checker">
-          <div class="checker-header">
-            <h3 class="checker-title" data-i18n="checkerTitle">Quick Eligibility Checker</h3>
-            <p data-i18n="checkerSubtitle">Answer 3 quick questions to check your status</p>
-          </div>
-
-          <form id="checkerForm" class="checker-form">
-            <!-- Question 1 -->
-            <div class="checker-question">
-              <span class="checker-q-label" data-i18n="checkerQ1">1. Are you an Indian citizen?</span>
-              <div class="checker-options">
-                <label class="radio-label">
-                  <input type="radio" name="citizen" value="yes" required>
-                  <span data-i18n="checkerYes">Yes</span>
-                </label>
-                <label class="radio-label">
-                  <input type="radio" name="citizen" value="no">
-                  <span data-i18n="checkerNo">No</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Question 2 -->
-            <div class="checker-question">
-              <span class="checker-q-label" data-i18n="checkerQ2">2. Are you 18 years old or above?</span>
-              <div class="checker-options">
-                <label class="radio-label">
-                  <input type="radio" name="age" value="yes" required>
-                  <span data-i18n="checkerYes">Yes</span>
-                </label>
-                <label class="radio-label">
-                  <input type="radio" name="age" value="no">
-                  <span data-i18n="checkerNo">No</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Question 3 -->
-            <div class="checker-question">
-              <span class="checker-q-label" data-i18n="checkerQ3">3. Is your name registered on the Voter List (Electoral Roll)?</span>
-              <div class="checker-options">
-                <label class="radio-label">
-                  <input type="radio" name="list" value="yes" required>
-                  <span data-i18n="checkerYes">Yes</span>
-                </label>
-                <label class="radio-label">
-                  <input type="radio" name="list" value="no">
-                  <span data-i18n="checkerNo">No</span>
-                </label>
-                <label class="radio-label">
-                  <input type="radio" name="list" value="not_sure">
-                  <span data-i18n="checkerNotSure">Not Sure</span>
-                </label>
-              </div>
-            </div>
-
-            <div class="checker-btn-wrap">
-              <button type="submit" class="btn-primary" data-i18n="checkerBtnCheck">Check My Eligibility</button>
-            </div>
-          </form>
-
-          <!-- Result Card -->
-          <div id="checkerResult" class="checker-result-box" aria-live="polite">
-            <h4 id="checkerResultTitle" class="checker-result-title"></h4>
-            <div id="checkerResultDesc"></div>
-            <button type="button" id="checkerResetBtn" class="btn-secondary" style="margin-top:14px;" data-i18n="checkerReset">Check Again</button>
-          </div>
-        </div>
-
-        <!-- 12 Accepted Photo IDs -->
-        <div class="accepted-ids-wrap">
-          <h3 style="font-size: 1.4rem; margin-bottom: 6px;" data-i18n="idCardSectionTitle">Don't Have a Physical Voter ID Card?</h3>
-          <p data-i18n="idCardSectionSubtitle">
-            No worries! If your name is in the voter list, you can show ANY ONE of these 12 approved official photo IDs:
-          </p>
-
-          <div class="id-badge-grid">
-            <div class="id-badge-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M15 8h2M15 12h2M7 16h10"/></svg>
-              <span data-i18n="idAadhaar">Aadhaar Card</span>
-            </div>
-            <div class="id-badge-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 15h10M7 9h4"/></svg>
-              <span data-i18n="idDL">Driving License</span>
-            </div>
-            <div class="id-badge-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-              <span data-i18n="idPAN">PAN Card</span>
-            </div>
-            <div class="id-badge-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-              <span data-i18n="idPassport">Indian Passport</span>
-            </div>
-            <div class="id-badge-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/></svg>
-              <span data-i18n="idBankPassbook">Passbook with photo (Bank/Post Office)</span>
-            </div>
-            <div class="id-badge-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-              <span data-i18n="idMNREGA">MNREGA Job Card</span>
-            </div>
-            <div class="id-badge-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-              <span data-i18n="idHealthCard">Health Insurance Smart Card</span>
-            </div>
-            <div class="id-badge-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              <span data-i18n="idPension">Pension Document with photo</span>
-            </div>
-            <div class="id-badge-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg>
-              <span data-i18n="idServiceCard">Service ID Card (Govt / PSU)</span>
-            </div>
-            <div class="id-badge-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              <span data-i18n="idMPMLA">Official Identity Card for MPs/MLAs</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 3: The Election Process in Simple Steps -->
-    <section id="election-process" class="section" aria-labelledby="s3-heading">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="s3-heading" class="section-title" data-i18n="s3Title">The Election Process in 5 Simple Steps</h2>
-          <p class="section-subtitle" data-i18n="s3Subtitle">From voter registration to seeing results on television</p>
-        </div>
-
-        <div class="steps-container">
-          <div class="process-step-card">
-            <div class="step-badge" data-i18n="step1Num">Step 1</div>
-            <div class="step-details">
-              <h3 data-i18n="step1Title">Voter Registration</h3>
-              <p data-i18n="step1Desc">You register as a voter using Form 6. Election officials verify your details and assign you a local Polling Booth.</p>
-            </div>
-          </div>
-
-          <div class="process-step-card">
-            <div class="step-badge" data-i18n="step2Num">Step 2</div>
-            <div class="step-details">
-              <h3 data-i18n="step2Title">Know Your Candidates</h3>
-              <p data-i18n="step2Desc">Learn about the candidates standing in your area. Look at their past work, qualifications, and plans. You can use the official KYC (Know Your Candidate) app.</p>
-            </div>
-          </div>
-
-          <div class="process-step-card">
-            <div class="step-badge" data-i18n="step3Num">Step 3</div>
-            <div class="step-details">
-              <h3 data-i18n="step3Title">Locate Your Polling Station</h3>
-              <p data-i18n="step3Desc">A few days before voting, find out your designated booth (often a local government school or community center near your home).</p>
-            </div>
-          </div>
-
-          <div class="process-step-card">
-            <div class="step-badge" data-i18n="step4Num">Step 4</div>
-            <div class="step-details">
-              <h3 data-i18n="step4Title">Cast Your Secret Vote</h3>
-              <p data-i18n="step4Desc">Visit the booth on voting day between 7:00 AM and 6:00 PM. Get your finger inked, step into the voting compartment, and press your choice on the EVM.</p>
-            </div>
-          </div>
-
-          <div class="process-step-card">
-            <div class="step-badge" data-i18n="step5Num">Step 5</div>
-            <div class="step-details">
-              <h3 data-i18n="step5Title">Counting & Results</h3>
-              <p data-i18n="step5Desc">On counting day, all sealed EVMs from every booth are opened in front of candidate representatives. The candidate with the highest votes wins!</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 4: What to do Before Voting -->
-    <section id="before-voting" class="section" aria-labelledby="s4-heading">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="s4-heading" class="section-title" data-i18n="s4Title">What to Do Before Voting Day</h2>
-          <p class="section-subtitle" data-i18n="s4Subtitle">A quick preparation guide so your voting day goes smoothly without stress</p>
-        </div>
-
-        <div class="grid-2">
-          <div class="feature-card">
-            <div class="card-icon-wrapper" aria-hidden="true">🔍</div>
-            <h3 class="card-title" data-i18n="beforeStep1Title">1. Search Your Name in Voter List</h3>
-            <p class="card-desc" data-i18n="beforeStep1Desc">
-              Never go directly without checking. Visit voters.eci.gov.in or SMS your EPIC number to 1950 to confirm your name and serial number.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <div class="card-icon-wrapper" aria-hidden="true">🪪</div>
-            <h3 class="card-title" data-i18n="beforeStep2Title">2. Keep Your Photo ID Ready</h3>
-            <p class="card-desc" data-i18n="beforeStep2Desc">
-              Keep your Voter ID (EPIC), Aadhaar card, or Driving License ready in your purse or pocket the night before.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <div class="card-icon-wrapper" aria-hidden="true">📍</div>
-            <h3 class="card-title" data-i18n="beforeStep3Title">3. Note Down Your Polling Booth Address</h3>
-            <p class="card-desc" data-i18n="beforeStep3Desc">
-              Check where your booth is located and plan your travel. Early morning (7:00 AM - 9:30 AM) usually has shorter queues.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <div class="card-icon-wrapper" aria-hidden="true">📵</div>
-            <h3 class="card-title" data-i18n="beforeStep4Title">4. No Smartphones in Voting Compartment</h3>
-            <p class="card-desc" data-i18n="beforeStep4Desc">
-              Taking photos or videos of the EVM is strictly illegal to protect vote secrecy. Leave mobile phones at home or outside the booth.
-            </p>
-          </div>
-        </div>
-
-        <!-- Interactive Voting Day Checklist -->
-        <div class="checklist-wrapper" role="region" aria-label="Voting Day Preparation Checklist">
-          <h3 style="font-size: 1.45rem; text-align: center;" data-i18n="clTitle">My Voting Day Checklist</h3>
-          <p style="text-align: center;" data-i18n="clSubtitle">Tick items as you prepare. We save your progress automatically!</p>
-
-          <div class="checklist-progress-bar-wrap">
-            <div class="checklist-progress-text">
-              <span data-i18n="clProgressText">Items Completed: </span>
-              <span id="checklistCount">0 / 6 (0%)</span>
-            </div>
-            <div class="progress-track" aria-hidden="true">
-              <div id="checklistProgressFill" class="progress-fill"></div>
-            </div>
-          </div>
-
-          <div class="checklist-items" id="checklistItems">
-            <label class="checklist-item">
-              <input type="checkbox">
-              <span data-i18n="clItem1">I verified my name is on the Electoral Roll (Voter list).</span>
-            </label>
-            <label class="checklist-item">
-              <input type="checkbox">
-              <span data-i18n="clItem2">I know my exact Polling Station (Booth) address.</span>
-            </label>
-            <label class="checklist-item">
-              <input type="checkbox">
-              <span data-i18n="clItem3">I have packed my Voter ID or Aadhaar / approved Photo ID.</span>
-            </label>
-            <label class="checklist-item">
-              <input type="checkbox">
-              <span data-i18n="clItem4">I know the booth timings (7:00 AM to 6:00 PM).</span>
-            </label>
-            <label class="checklist-item">
-              <input type="checkbox">
-              <span data-i18n="clItem5">I have researched the candidates standing in my constituency.</span>
-            </label>
-            <label class="checklist-item">
-              <input type="checkbox">
-              <span data-i18n="clItem6">I will leave my smartphone safely before entering the voting room.</span>
-            </label>
-          </div>
-
-          <div id="checklistDoneAlert" class="checklist-done-alert" data-i18n="clDoneBadge">
-            You are 100% Ready for Voting Day! 🎉
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 5: What Happens on Voting Day -->
-    <section id="voting-day" class="section" aria-labelledby="s5-heading">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="s5-heading" class="section-title" data-i18n="s5Title">What Happens Inside the Polling Station?</h2>
-          <p class="section-subtitle" data-i18n="s5Subtitle">Step-by-step walkthrough so you know exactly what to expect inside</p>
-        </div>
-
-        <div class="station-journey">
-          <!-- Step 1 -->
-          <div class="station-node">
-            <div class="station-node-header">
-              <div class="station-icon-badge" aria-hidden="true">👮‍♂️</div>
-              <h3 class="station-node-title" data-i18n="boothStep1Title">1. Security & Queue</h3>
-            </div>
-            <p class="station-node-desc" data-i18n="boothStep1Desc">
-              Friendly police or security guards direct voters into separate queues for senior citizens, women, and men. Wait patiently for your turn.
-            </p>
-          </div>
-
-          <!-- Step 2 -->
-          <div class="station-node">
-            <div class="station-node-header">
-              <div class="station-icon-badge" aria-hidden="true">📇</div>
-              <h3 class="station-node-title" data-i18n="boothStep2Title">2. First Polling Officer (Identification)</h3>
-            </div>
-            <p class="station-node-desc" data-i18n="boothStep2Desc">
-              Show your ID. The officer checks your name in the voter list, announces your name and serial number loudly so party agents can verify.
-            </p>
-          </div>
-
-          <!-- Step 3: Inking -->
-          <div class="station-node highlight-ink">
-            <div class="station-node-header">
-              <div class="station-icon-badge" style="background:#eff6ff; color:#1d4ed8;" aria-hidden="true">🖊️</div>
-              <h3 class="station-node-title" data-i18n="boothStep3Title">3. Second Polling Officer (Ink & Signature)</h3>
-            </div>
-            <p class="station-node-desc" data-i18n="boothStep3Desc">
-              The officer applies indelible blue-black ink on your left index finger, takes your signature or thumbprint in the register (Form 17A), and gives you a small voter slip.
-            </p>
-          </div>
-
-          <!-- Step 4 -->
-          <div class="station-node">
-            <div class="station-node-header">
-              <div class="station-icon-badge" aria-hidden="true">🖲️</div>
-              <h3 class="station-node-title" data-i18n="boothStep4Title">4. Third Polling Officer (EVM Activation)</h3>
-            </div>
-            <p class="station-node-desc" data-i18n="boothStep4Desc">
-              Give the slip to the third officer. They inspect your inked finger and press the 'BALLOT' button on the Control Unit to activate the voting machine for you.
-            </p>
-          </div>
-
-          <!-- Step 5 -->
-          <div class="station-node">
-            <div class="station-node-header">
-              <div class="station-icon-badge" aria-hidden="true">🗳️</div>
-              <h3 class="station-node-title" data-i18n="boothStep5Title">5. The Voting Compartment (Your Secret Vote)</h3>
-            </div>
-            <p class="station-node-desc" data-i18n="boothStep5Desc">
-              Walk alone into the enclosed voting booth. On the Ballot Unit, find the name and symbol of your choice. Press the BLUE button next to it.
-            </p>
-          </div>
-
-          <!-- Step 6 -->
-          <div class="station-node">
-            <div class="station-node-header">
-              <div class="station-icon-badge" aria-hidden="true">🔔</div>
-              <h3 class="station-node-title" data-i18n="boothStep6Title">6. Beep & VVPAT Slip Confirmation</h3>
-            </div>
-            <p class="station-node-desc" data-i18n="boothStep6Desc">
-              A red light glows next to your button and a loud 'BEEP' sounds. Look at the VVPAT machine's transparent window: a paper slip showing your candidate's serial number, name, and symbol is visible for 7 seconds before dropping into the sealed box!
-            </p>
-          </div>
-
-          <!-- Step 7 -->
-          <div class="station-node">
-            <div class="station-node-header">
-              <div class="station-icon-badge" aria-hidden="true">✌️</div>
-              <h3 class="station-node-title" data-i18n="boothStep7Title">7. Proudly Exit With Inked Finger</h3>
-            </div>
-            <p class="station-node-desc" data-i18n="boothStep7Desc">
-              Your vote is cast! You can now walk out proudly, show off your inked finger, and inspire family and neighbors to vote.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 6: Interactive EVM & VVPAT Simulator -->
-    <section id="evm-simulator" class="section" aria-labelledby="sim-heading">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="sim-heading" class="section-title" data-i18n="simTitle">Virtual EVM & VVPAT Simulator</h2>
-          <p class="section-subtitle" data-i18n="simSubtitle">Practice casting a vote in a safe, fun, and realistic mock election. Removes all hesitation for first-timers!</p>
-        </div>
-
-        <div class="simulator-container" role="region" aria-label="Interactive EVM and VVPAT Simulator">
-          <div class="sim-notice" data-i18n="simNotice">
-            Educational Simulator: Uses neutral nature symbols. Demonstrates how real EVMs and VVPATs work.
-          </div>
-
-          <div class="sim-setup-grid">
-            <!-- Left: Ballot Unit (BU) -->
-            <div class="evm-unit" aria-label="Ballot Unit">
-              <div class="evm-header-panel">
-                <span>EVM BALLOT UNIT (ಮತದಾನ ಯಂತ್ರ)</span>
-                <div class="evm-led-ready-indicator">
-                  <span class="led-bulb-green" aria-hidden="true"></span>
-                  <span data-i18n="simReadyLight">READY TO VOTE</span>
-                </div>
-              </div>
-
-              <!-- Candidate rows rendered dynamically by app.js -->
-              <div class="ballot-rows" id="evmBallotRows"></div>
-            </div>
-
-            <!-- Right: VVPAT Machine -->
-            <div class="vvpat-unit" aria-label="VVPAT Machine">
-              <h3 class="vvpat-title" data-i18n="simVvpatLabel">VVPAT Window (Verification Slip)</h3>
-              <p class="vvpat-desc" data-i18n="simVvpatInstruction">
-                Look here! Real VVPAT displays your chosen symbol for 7 seconds before it cuts and drops into the drop-box.
-              </p>
-
-              <!-- Transparent Window -->
-              <div class="vvpat-window-frame">
-                <div class="vvpat-glass-glare" aria-hidden="true"></div>
-                
-                <div id="vvpatPlaceholder" class="vvpat-placeholder-text" data-i18n="simVvpatEmpty">
-                  Waiting for vote...
-                </div>
-
-                <div id="vvpatPaperSlip" class="vvpat-paper-slip" aria-live="assertive"></div>
-              </div>
-
-              <!-- 7-second display timer -->
-              <div id="vvpatTimerIndicator" class="vvpat-timer-indicator"></div>
-            </div>
-          </div>
-
-          <!-- Bottom status & reset controls -->
-          <div class="sim-controls-bar">
-            <span id="simStatusText" class="sim-status-text" data-i18n="simStatusWaiting">
-              Status: EVM is READY. Press the blue button next to your choice below.
-            </span>
-            <button type="button" id="btnResetSim" class="btn-reset-sim" data-i18n="simResetBtn">
-              Try Again / Reset Simulator
-            </button>
-          </div>
-
-          <!-- Success Alert -->
-          <div id="simSuccessAlert" style="display:none; margin-top:20px; background:#064e3b; border:2px solid #34d399; padding:16px; border-radius:12px; text-align:center; font-weight:700; color:#ecfdf5;" data-i18n="simSuccessMsg">
-            Congratulations! You have experienced how an EVM and VVPAT work. On actual election day, it works exactly like this!
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 7: Election Timeline -->
-    <section id="election-timeline" class="section" aria-labelledby="timeline-heading">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="timeline-heading" class="section-title" data-i18n="tTitle">Easy-to-Follow Election Timeline</h2>
-          <p class="section-subtitle" data-i18n="tSubtitle">From the first announcement to the final victory celebration</p>
-        </div>
-
-        <div class="timeline-track">
-          <!-- Phase 1 -->
-          <div class="timeline-step">
-            <div class="timeline-step-badge">1</div>
-            <div class="timeline-step-card">
-              <h3 class="timeline-step-title" data-i18n="tPhase1Title">1. Announcement & Model Code of Conduct</h3>
-              <p class="timeline-step-desc" data-i18n="tPhase1Desc">
-                Election Commission announces election dates. The Model Code of Conduct comes into force immediately to prevent misuse of government machinery.
-              </p>
-            </div>
-          </div>
-
-          <!-- Phase 2 -->
-          <div class="timeline-step">
-            <div class="timeline-step-badge">2</div>
-            <div class="timeline-step-card">
-              <h3 class="timeline-step-title" data-i18n="tPhase2Title">2. Filing Nominations</h3>
-              <p class="timeline-step-desc" data-i18n="tPhase2Desc">
-                Candidates file nomination papers with details of wealth, education, and criminal records (Form 26).
-              </p>
-            </div>
-          </div>
-
-          <!-- Phase 3 -->
-          <div class="timeline-step">
-            <div class="timeline-step-badge">3</div>
-            <div class="timeline-step-card">
-              <h3 class="timeline-step-title" data-i18n="tPhase3Title">3. Scrutiny & Final List</h3>
-              <p class="timeline-step-desc" data-i18n="tPhase3Desc">
-                Officials verify papers. Candidates who wish to withdraw may do so. The final list of contesting candidates and symbols is published.
-              </p>
-            </div>
-          </div>
-
-          <!-- Phase 4 -->
-          <div class="timeline-step">
-            <div class="timeline-step-badge">4</div>
-            <div class="timeline-step-card">
-              <h3 class="timeline-step-title" data-i18n="tPhase4Title">4. Campaigning Period</h3>
-              <p class="timeline-step-desc" data-i18n="tPhase4Desc">
-                Candidates hold rallies, distribute manifestos, and meet citizens to explain their vision.
-              </p>
-            </div>
-          </div>
-
-          <!-- Phase 5 -->
-          <div class="timeline-step">
-            <div class="timeline-step-badge">5</div>
-            <div class="timeline-step-card">
-              <h3 class="timeline-step-title" data-i18n="tPhase5Title">5. 48-Hour Silence Period</h3>
-              <p class="timeline-step-desc" data-i18n="tPhase5Desc">
-                48 hours before polling ends, all public campaigning, rallies, and loudspeakers must stop so voters can think calmly without noise.
-              </p>
-            </div>
-          </div>
-
-          <!-- Phase 6 -->
-          <div class="timeline-step">
-            <div class="timeline-step-badge">6</div>
-            <div class="timeline-step-card">
-              <h3 class="timeline-step-title" data-i18n="tPhase6Title">6. Polling Day (Voting Day)</h3>
-              <p class="timeline-step-desc" data-i18n="tPhase6Desc">
-                Citizens cast their votes from 7:00 AM to 6:00 PM. EVMs are sealed in front of representatives.
-              </p>
-            </div>
-          </div>
-
-          <!-- Phase 7 -->
-          <div class="timeline-step">
-            <div class="timeline-step-badge">7</div>
-            <div class="timeline-step-card">
-              <h3 class="timeline-step-title" data-i18n="tPhase7Title">7. Counting & Results Day</h3>
-              <p class="timeline-step-desc" data-i18n="tPhase7Desc">
-                Sealed EVMs are opened at counting centers under tight security. Results are announced round by round.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 8: Mythbusters & FAQs -->
-    <section id="faq" class="section" aria-labelledby="faq-heading">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="faq-heading" class="section-title" data-i18n="faqTitle">Common Questions & Mythbusters</h2>
-          <p class="section-subtitle" data-i18n="faqSubtitle">Clear answers to doubts people frequently have about voting</p>
-        </div>
-
-        <div class="faq-accordion">
-          <!-- FAQ 1 -->
-          <div class="faq-item">
-            <button type="button" class="faq-question-btn" aria-expanded="false">
-              <span data-i18n="faqQ1">Can I vote if I lost my plastic Voter ID card?</span>
-              <span class="faq-chevron" aria-hidden="true">▼</span>
-            </button>
-            <div class="faq-answer">
-              <p data-i18n="faqA1">
-                YES! As long as your name is on the official voter list, you can vote using any of the 12 approved photo IDs like your Aadhaar card, Driving License, Passport, or PAN card.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ 2 -->
-          <div class="faq-item">
-            <button type="button" class="faq-question-btn" aria-expanded="false">
-              <span data-i18n="faqQ2">Can anyone find out who I voted for?</span>
-              <span class="faq-chevron" aria-hidden="true">▼</span>
-            </button>
-            <div class="faq-answer">
-              <p data-i18n="faqA2">
-                NO. Absolutely impossible. The voting booth is completely private. The EVM does not record your name or ID, only the total tally. Vote secrecy is guaranteed by law.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ 3 -->
-          <div class="faq-item">
-            <button type="button" class="faq-question-btn" aria-expanded="false">
-              <span data-i18n="faqQ3">What is NOTA?</span>
-              <span class="faq-chevron" aria-hidden="true">▼</span>
-            </button>
-            <div class="faq-answer">
-              <p data-i18n="faqA3">
-                NOTA stands for 'None of the Above'. It is the very last button on the EVM. You can choose NOTA if you do not wish to vote for any of the candidates listed in your constituency.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ 4 -->
-          <div class="faq-item">
-            <button type="button" class="faq-question-btn" aria-expanded="false">
-              <span data-i18n="faqQ4">Can my employer deduct salary if I go to vote on election day?</span>
-              <span class="faq-chevron" aria-hidden="true">▼</span>
-            </button>
-            <div class="faq-answer">
-              <p data-i18n="faqA4">
-                NO. Under Section 135B of the Representation of the People Act, every registered voter working in business, trade, industrial undertaking, or IT is entitled to a PAID HOLIDAY on voting day.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ 5 -->
-          <div class="faq-item">
-            <button type="button" class="faq-question-btn" aria-expanded="false">
-              <span data-i18n="faqQ5">Can someone vote on my behalf with my ID card?</span>
-              <span class="faq-chevron" aria-hidden="true">▼</span>
-            </button>
-            <div class="faq-answer">
-              <p data-i18n="faqA5">
-                NO. Proxy voting is illegal. Only you can cast your vote in person. Your identity is verified against the voter list and indelible ink is marked on your finger.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 9: Mini Quiz & Certificate of Awareness -->
-    <section id="voter-quiz" class="section" aria-labelledby="quiz-heading">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="quiz-heading" class="section-title" data-i18n="quizTitle">Test Your Voter Knowledge!</h2>
-          <p class="section-subtitle" data-i18n="quizSubtitle">Answer 4 fun, simple questions to earn your 'Informed Citizen' badge</p>
-        </div>
-
-        <div class="quiz-box">
-          <form id="quizForm">
-            <div class="quiz-questions-list">
-              <!-- Q1 -->
-              <div class="quiz-q-card">
-                <div class="quiz-q-title" data-i18n="q1Question">1. What is the minimum age to be eligible to vote in India?</div>
-                <div class="quiz-options-group">
-                  <label class="quiz-opt-label">
-                    <input type="radio" name="q1" value="a" required>
-                    <span data-i18n="q1OptA">16 years</span>
-                  </label>
-                  <label class="quiz-opt-label">
-                    <input type="radio" name="q1" value="b">
-                    <span data-i18n="q1OptB">18 years</span>
-                  </label>
-                  <label class="quiz-opt-label">
-                    <input type="radio" name="q1" value="c">
-                    <span data-i18n="q1OptC">21 years</span>
-                  </label>
-                </div>
-              </div>
-
-              <!-- Q2 -->
-              <div class="quiz-q-card">
-                <div class="quiz-q-title" data-i18n="q2Question">2. If you do not have your Voter ID card, can you still vote if your name is on the voter list?</div>
-                <div class="quiz-options-group">
-                  <label class="quiz-opt-label">
-                    <input type="radio" name="q2" value="a" required>
-                    <span data-i18n="q2OptA">Yes, by showing Aadhaar or any approved photo ID</span>
-                  </label>
-                  <label class="quiz-opt-label">
-                    <input type="radio" name="q2" value="b">
-                    <span data-i18n="q2OptB">No, voting is completely impossible without Voter ID</span>
-                  </label>
-                  <label class="quiz-opt-label">
-                    <input type="radio" name="q2" value="c">
-                    <span data-i18n="q2OptC">Yes, but only after paying a fine</span>
-                  </label>
-                </div>
-              </div>
-
-              <!-- Q3 -->
-              <div class="quiz-q-card">
-                <div class="quiz-q-title" data-i18n="q3Question">3. How long is the printed slip visible in the VVPAT window before dropping?</div>
-                <div class="quiz-options-group">
-                  <label class="quiz-opt-label">
-                    <input type="radio" name="q3" value="a" required>
-                    <span data-i18n="q3OptA">2 seconds</span>
-                  </label>
-                  <label class="quiz-opt-label">
-                    <input type="radio" name="q3" value="b">
-                    <span data-i18n="q3OptB">7 seconds</span>
-                  </label>
-                  <label class="quiz-opt-label">
-                    <input type="radio" name="q3" value="c">
-                    <span data-i18n="q3OptC">30 seconds</span>
-                  </label>
-                </div>
-              </div>
-
-              <!-- Q4 -->
-              <div class="quiz-q-card">
-                <div class="quiz-q-title" data-i18n="q4Question">4. Can someone else see which button you pressed inside the voting booth?</div>
-                <div class="quiz-options-group">
-                  <label class="quiz-opt-label">
-                    <input type="radio" name="q4" value="a" required>
-                    <span data-i18n="q4OptA">Yes, the polling officers can see</span>
-                  </label>
-                  <label class="quiz-opt-label">
-                    <input type="radio" name="q4" value="b">
-                    <span data-i18n="q4OptB">No, your vote is completely secret and private</span>
-                  </label>
-                  <label class="quiz-opt-label">
-                    <input type="radio" name="q4" value="c">
-                    <span data-i18n="q4OptC">Yes, candidate agents can see</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <div style="text-align: center;">
-              <button type="submit" class="btn-primary" data-i18n="quizSubmitBtn">Check My Score</button>
-            </div>
-          </form>
-
-          <div id="quizScoreBanner" class="quiz-score-banner" aria-live="polite">
-            <div id="quizScoreText"></div>
-          </div>
-
-          <!-- Certificate Section -->
-          <div id="certSection" class="certificate-section">
-            <div class="certificate-card" id="certificateCard">
-              <div class="cert-emblem" aria-hidden="true">🇮🇳 📜 ⭐</div>
-              <h3 class="cert-title" data-i18n="quizBadgeTitle">Certificate of Election Awareness</h3>
-              <p style="font-size: 0.95rem; color:#64748b;" data-i18n="quizBadgeSubtitle">Presented to an Informed, Responsible Citizen</p>
-              
-              <div style="margin-top: 14px; font-weight: 600;" data-i18n="quizBadgeAwardedTo">Awarded to:</div>
-              <div class="cert-name-display" id="certNameDisplay">Empowered Citizen of India</div>
-              
-              <p style="font-size: 0.9rem; color:#475569; max-width: 480px; margin: 0 auto;">
-                "I understand that every single vote matters and empowers the democracy of our nation. I pledge to exercise my democratic right fearlessly and responsibly."
-              </p>
-            </div>
-
-            <!-- Name entry to personalize certificate -->
-            <div class="cert-input-wrap">
-              <input type="text" id="certNameInput" class="input-text" placeholder="Enter Your Name" data-i18n-ph="quizNamePlaceholder">
-              <button type="button" id="btnGenCert" class="btn-primary" data-i18n="quizGenerateBadgeBtn">Generate My Badge</button>
-            </div>
-
-            <div style="margin-top: 16px;">
-              <button type="button" id="btnPrintCert" class="btn-secondary" style="font-size: 0.95rem;">🖨️ Print / Save Certificate</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-helpline-box">
-          <h3 style="font-size: 1.3rem; margin-bottom: 6px;" data-i18n="footerHelplineTitle">Official Citizen Helpdesk</h3>
-          <p style="color:#cbd5e1;" data-i18n="footerHelplineText">National Voter Helpline Toll-Free: 1950</p>
-          <span class="helpline-number">📞 1950</span>
-          <p style="color:#94a3b8; font-size: 0.9rem; margin-top: 6px;">Available Monday to Saturday in all regional languages.</p>
-          <a href="https://voters.eci.gov.in" target="_blank" rel="noopener noreferrer" class="footer-portal-link">
-            <span data-i18n="footerPortalLink">Election Commission Official Portal (voters.eci.gov.in)</span> ↗
-          </a>
-        </div>
+  <!-- Guided Mode Floating Control Dock -->
+  <div id="wizardDock" class="wizard-control-dock" style="display: none;" role="region" aria-label="Guided Journey Controls">
+    <button type="button" id="btnDockBack" class="dock-btn" aria-label="Go to previous step">
+      <span data-i18n="btnBack">← Back</span>
+    </button>
+    <div class="dock-status" id="dockStepText">Step 1 of 6</div>
+    <button type="button" id="btnDockNext" class="dock-btn btn-primary-dock" aria-label="Go to next step">
+      <span data-i18n="btnNext">Next →</span>
+    </button>
+    <button type="button" id="btnDockRepeat" class="dock-btn" title="Repeat Audio Explanation" aria-label="Repeat audio narration">
+      <span data-i18n="btnRepeatAudio">🔊 Repeat Audio</span>
+    </button>
+    <button type="button" id="btnDockExit" class="dock-btn" title="Exit Guided Stepper" aria-label="Exit guided view">
+      <span data-i18n="btnExitGuided">✕ Free View</span>
+    </button>
+  </div>
 
-        <div>
-          <div style="font-size: 1.35rem; font-weight: 800; color: #ffffff; margin-bottom: 10px;">
-            JanMat • ಜನಮತ
-          </div>
-          <p style="color:#cbd5e1; font-size: 0.95rem; line-height: 1.6;" data-i18n="footerRights">
-            Built for every citizen. Democracy thrives when everyone votes.
-          </p>
-          <div style="margin-top: 16px; display: flex; gap: 10px;">
-            <span style="font-size: 1.8rem;" title="Democracy">🏛️</span>
-            <span style="font-size: 1.8rem;" title="Vote">🗳️</span>
-            <span style="font-size: 1.8rem;" title="Inked Finger">☝️</span>
-            <span style="font-size: 1.8rem;" title="India">🇮🇳</span>
-          </div>
-        </div>
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand" data-i18n="appTitle">Election Awareness Platform</div>
+        <p style="font-size: 0.85rem; margin-top: 4px;" data-i18n="tagline">Know the Process. Understand Your Vote</p>
+        <p style="font-size: 0.8rem; margin-top: 8px;" data-i18n="footerCopy">
+          © 2026 Election Awareness Platform • Built for First-Time Voters & Inclusive Democracy.
+        </p>
       </div>
 
-      <div class="footer-disclaimer" data-i18n="footerDisclaimer">
-        Disclaimer: This platform is created strictly for non-partisan civic awareness and public education. It does not promote, endorse, or affiliate with any political party, candidate, or ideology.
+      <div class="footer-neutrality-note" data-i18n="footerNeutrality">
+        Strictly informational, non-partisan, and educational. No real candidate or political organization is favored or represented.
       </div>
     </div>
   </footer>
 
   <!-- Scripts -->
   <script src="js/translations.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/evm.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
